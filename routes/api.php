@@ -1,7 +1,6 @@
 <?php
 
-use App\Bookable;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\BookableController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,19 +14,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get('bookables', function(Request $request) {
-    return Bookable::all();
-});
+// Route::get('bookables', function(Request $request) {
+//     return Bookable::all();
+// });
 
-Route::get('bookables/{bookable}', function(Request $request, Bookable $bookable) {
-    //route model binding in routes file (can be done in controller)
-    return $bookable;
-});
+// Route::get('bookables/{bookable}', function(Request $request, Bookable $bookable) {
+//     //route model binding in routes file (can be done in controller)
+//     return $bookable;
+// });
 
 // Route::get('bookables/{bookable}/{optional?}', function(Request $request, Bookable $bookable, $optional = null) {
 //     return Bookable::find($bookable);
 // });
+
+
+//define separate route
+// Route::get('bookables',  'Api\BookableController@index');
+// Route::get('bookables/{bookable}',  'Api\BookableController@show');
+
+// //another way
+// Route::get('bookables',  [BookableController::class,'index']);
+
+
+
+//use resource (defines index, create, store, show, edit, update, destroy routes)
+// Route::resource('bookables',Api\BookableController::class);
+//or
+Route::resource('bookables','Api\BookableController')->only('index','show');

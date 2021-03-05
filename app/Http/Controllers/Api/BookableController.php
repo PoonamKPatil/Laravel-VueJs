@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Bookable;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BookableIndexResource;
+use App\Http\Resources\BookableShowResource;
 use Illuminate\Http\Request;
 
 class BookableController extends Controller
@@ -14,7 +17,9 @@ class BookableController extends Controller
      */
     public function index()
     {
-        //
+        // return Bookable::all();
+
+        return  BookableIndexResource::collection(Bookable::all());
     }
 
     /**
@@ -44,9 +49,11 @@ class BookableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Bookable $bookable)
     {
-        //
+        // return $bookable; 
+
+        return new BookableShowResource($bookable);
     }
 
     /**
