@@ -44,4 +44,5 @@ use Illuminate\Support\Facades\Route;
 //use resource (defines index, create, store, show, edit, update, destroy routes)
 // Route::resource('bookables',Api\BookableController::class);
 //or
-Route::resource('bookables','Api\BookableController')->only('index','show');
+Route::apiResource('bookables','Api\BookableController')->only('index','show');
+Route::get('bookable/{bookable}/availability','Api\BookableAvailability')->name('bookables.availability.show');
