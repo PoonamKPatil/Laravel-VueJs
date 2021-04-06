@@ -12,9 +12,16 @@
 </template>
 
 <script>
-    export default {
-       components : {
+import moment from 'moment';
 
-       }
+export default {
+    components : {
+
+    },
+    filters:{
+    fromNow(value) {
+        return moment(value).fromNow();
+    }
+}
     }
 </script>

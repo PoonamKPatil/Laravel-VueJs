@@ -46,3 +46,5 @@ use Illuminate\Support\Facades\Route;
 //or
 Route::apiResource('bookables','Api\BookableController')->only('index','show');
 Route::get('bookable/{bookable}/availability','Api\BookableAvailability')->name('bookables.availability.show');
+
+Route::get('bookables/{bookable}/reviews', 'Api\BookableReviewcontroller')->name('bookables.reviews.index');

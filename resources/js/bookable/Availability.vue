@@ -33,6 +33,9 @@
 </template>
 <script>
 export default {
+    props: {
+        bookableId: String
+    },
     data() {
         return {
             from: null,
@@ -47,7 +50,7 @@ export default {
             this.loading = true;
             this.errors = null;
 
-            axios.get(`/api/bookable/${this.$route.params.id}/availability?from=${this.from}&to=${this.to}`)
+            axios.get(`/api/bookable/${this.bookableId}/availability?from=${this.from}&to=${this.to}`)
             .then(response => {
                 this.loading  = false
                 this.status  = response.status
