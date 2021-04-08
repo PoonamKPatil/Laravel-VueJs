@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class Booking extends Model
 {
-    protected $fillables = ['from', 'to'];
+    protected $fillable = ['from', 'to'];
 
     public function bookable()
     {
