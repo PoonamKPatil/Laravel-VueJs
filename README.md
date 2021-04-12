@@ -1,3 +1,12 @@
+Steps for installation
+1) git clone https://github.com/PoonamKPatil/Laravel-VueJs.git
+2) composer install
+3) php artisan migrate:refresh --seed
+4) php artisan serve
+5) node version: v10.19.0, npm: 6.14.4
+6) npm install
+7) npm run watch
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
