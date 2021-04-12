@@ -13,15 +13,28 @@
 
 <script>
 import moment from 'moment';
-
+import {mapState} from 'vuex';
 export default {
-    components : {
-
+    data() {
+        return {
+            lastSearch: this.$store.state.lastSearch
+        }
     },
     filters:{
-    fromNow(value) {
-        return moment(value).fromNow();
+        fromNow(value) {
+            return moment(value).fromNow();
+        }
+    },
+    computed: {
+        ...mapState({
+            // lastSearchComputed : state  => state.lastSearch
+            //or
+            lastSearchComputed : 'lastSearch',
+            //or
+            // lastSearchComputed (state) {
+            //     return state.lastSearch
+            // }
+        })
     }
 }
-    }
 </script>
