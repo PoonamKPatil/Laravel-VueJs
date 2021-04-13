@@ -4,20 +4,20 @@
             Check Availability
             <transition>
                 <span v-if="hasAvailability" class="text-success"> Available</span>
-                <span v-if="noAvailability" class="text-danger"> Not Available</span>
+                <span v-if="status != null && !hasAvailability && !hasErrors" class="text-danger"> Not Available</span>
             </transition>
         </h6>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="from">From</label>
-                <input class = "form-control form-control-sm" type="text" name="from" placeholder="Start Date" 
+                <input class = "form-control form-control-sm" type="date" name="from" placeholder="Start Date" 
                 v-model="from" @keyup.enter="check()" 
                 :class="[{'is-invalid' : errorFor('from')}]">
                  <v-error :errors ="errorFor('from')"></v-error>
             </div>
             <div class="form-group col-md-6">
                  <label for="to">To</label>
-                <input class = "form-control form-control-sm" type="text" name="to" placeholder="End Date" 
+                <input class = "form-control form-control-sm" type="date" name="to" placeholder="End Date" 
                 v-model="to" @keyup.enter="check()"
                 :class="[{'is-invalid' : errorFor('to')}]">
                   <v-error :errors ="errorFor('to')"></v-error>
@@ -98,9 +98,9 @@ export default {
             return 200 === this.status
         },
 
-        noAvailability() {
-            return 404 === this.status
-        }
+        // noAvailability() {
+        //     return 404 === this.status
+        // }
     }
 }
 </script>

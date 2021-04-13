@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Bookable;
+use App\Models\Bookable;
 use Faker\Generator as Faker;
 use Illuminate\Support\Arr;
 

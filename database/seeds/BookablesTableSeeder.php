@@ -1,6 +1,6 @@
 <?php
 
-use App\Bookable;
+use App\Models\Bookable;
 use Illuminate\Database\Seeder;
 
 class BookablesTableSeeder extends Seeder

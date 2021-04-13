@@ -17,7 +17,7 @@
 
     </div>
     <div class="col-md-4 pb-4">
-       <availability :bookable-id = this.$route.params.id @availability="checkPrice($event)" class="mb-4"></availability>
+       <availability :bookable-id = $route.params.id @availability="checkPrice($event)" class="mb-4"></availability>
         <transition name="fade">
             <price-breakdown v-if="price" :price="price" class="mb-4"></price-breakdown>
         </transition>

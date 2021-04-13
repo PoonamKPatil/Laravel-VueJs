@@ -1967,9 +1967,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1989,7 +1987,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-
+//
+//
+//
+//
+// import moment from 'moment';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1997,12 +1999,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       lastSearch: this.$store.state.lastSearch
     };
   },
-  filters: {
-    fromNow: function fromNow(value) {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).fromNow();
-    }
-  },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+  // filters:{
+  //     fromNow(value) {
+  //         return moment(value).fromNow();
+  //     }
+  // },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
     // lastSearchComputed : state  => state.lastSearch
     //or
     lastSearchComputed: 'lastSearch' //or
@@ -2010,6 +2012,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //     return state.lastSearch
     // }
 
+  })), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    itemsInBasket: 'itemsInBasket'
   }))
 });
 
@@ -2153,10 +2157,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     hasAvailability: function hasAvailability() {
       return 200 === this.status;
-    },
-    noAvailability: function noAvailability() {
-      return 404 === this.status;
-    }
+    } // noAvailability() {
+    //     return 404 === this.status
+    // }
+
   }
 });
 
@@ -2347,6 +2351,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -61662,6 +61668,19 @@ var render = function() {
           "router-link",
           { staticClass: "navbar-brand", attrs: { to: { name: "home" } } },
           [_vm._v("Home")]
+        ),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          { staticClass: "btn nav-button", attrs: { to: { name: "home" } } },
+          [
+            _vm._v("\n            Basket\n            "),
+            _vm.itemsInBasket
+              ? _c("span", { staticClass: "badge badge-secondary" }, [
+                  _vm._v(_vm._s(_vm.itemsInBasket))
+                ])
+              : _vm._e()
+          ]
         )
       ],
       1
@@ -61710,7 +61729,7 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm.noAvailability
+          _vm.status != null && !_vm.hasAvailability && !_vm.hasErrors
             ? _c("span", { staticClass: "text-danger" }, [
                 _vm._v(" Not Available")
               ])
@@ -61738,7 +61757,7 @@ var render = function() {
             ],
             staticClass: "form-control form-control-sm",
             class: [{ "is-invalid": _vm.errorFor("from") }],
-            attrs: { type: "text", name: "from", placeholder: "Start Date" },
+            attrs: { type: "date", name: "from", placeholder: "Start Date" },
             domProps: { value: _vm.from },
             on: {
               keyup: function($event) {
@@ -61781,7 +61800,7 @@ var render = function() {
             ],
             staticClass: "form-control form-control-sm",
             class: [{ "is-invalid": _vm.errorFor("to") }],
-            attrs: { type: "text", name: "to", placeholder: "End Date" },
+            attrs: { type: "date", name: "to", placeholder: "End Date" },
             domProps: { value: _vm.to },
             on: {
               keyup: function($event) {
@@ -61890,7 +61909,7 @@ var render = function() {
       [
         _c("availability", {
           staticClass: "mb-4",
-          attrs: { "bookable-id": this.$route.params.id },
+          attrs: { "bookable-id": _vm.$route.params.id },
           on: {
             availability: function($event) {
               return _vm.checkPrice($event)
@@ -62037,47 +62056,43 @@ var render = function() {
       : _c(
           "div",
           _vm._l(_vm.reviews, function(review, index) {
-            return _c(
-              "div",
-              { key: index, staticClass: "border-bottom d-none d-md-block" },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-6" }, [_vm._v("Poonam ")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-md-6 d-flex justify-content-end" },
-                    [
-                      _c("star-rating", {
-                        staticClass: "fa-lg",
-                        attrs: { value: review.rating }
-                      })
-                    ],
-                    1
+            return _c("div", { key: index, staticClass: "border-bottom" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-6" }, [_vm._v("Poonam ")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-6 d-flex justify-content-end" },
+                  [
+                    _c("star-rating", {
+                      staticClass: "fa-lg",
+                      attrs: { value: review.rating }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm._f("fromNow")(review.created_at)) +
+                      "\n                "
                   )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(_vm._f("fromNow")(review.created_at)) +
-                        "\n                "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row pt-4 pb-4" }, [
-                  _c("div", { staticClass: "col" }, [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(review.content) +
-                        "\n                "
-                    )
-                  ])
                 ])
-              ]
-            )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row pt-4 pb-4" }, [
+                _c("div", { staticClass: "col" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(review.content) +
+                      "\n                "
+                  )
+                ])
+              ])
+            ])
           }),
           0
         )
@@ -80298,6 +80313,11 @@ __webpack_require__.r(__webpack_exports__);
       if (lastSearch) {
         context.commit('setLastSearch', JSON.parse(lastSearch));
       }
+    }
+  },
+  getters: {
+    itemsInBasket: function itemsInBasket(state) {
+      return state.basket.items.length;
     }
   }
 });

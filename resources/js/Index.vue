@@ -2,6 +2,10 @@
     <div>
         <nav class="navbar bg-white border-bottom navbar-light ">
             <router-link class = "navbar-brand" v-bind:to = "{name: 'home'}">Home</router-link>
+            <router-link class = "btn nav-button" v-bind:to = "{name: 'home'}">
+                Basket
+                <span v-if="itemsInBasket" class="badge badge-secondary">{{itemsInBasket}}</span>
+            </router-link>
             <!-- <router-link class = "btn nav-button" v-bind:to = "{name: 'second'}">Second</router-link> -->
         </nav>
        
@@ -12,19 +16,19 @@
 </template>
 
 <script>
-import moment from 'moment';
-import {mapState} from 'vuex';
+// import moment from 'moment';
+import {mapState, mapGetters} from 'vuex';
 export default {
     data() {
         return {
             lastSearch: this.$store.state.lastSearch
         }
     },
-    filters:{
-        fromNow(value) {
-            return moment(value).fromNow();
-        }
-    },
+    // filters:{
+    //     fromNow(value) {
+    //         return moment(value).fromNow();
+    //     }
+    // },
     computed: {
         ...mapState({
             // lastSearchComputed : state  => state.lastSearch
@@ -34,6 +38,9 @@ export default {
             // lastSearchComputed (state) {
             //     return state.lastSearch
             // }
+        }),
+        ...mapGetters({
+            itemsInBasket:'itemsInBasket'
         })
     }
 }

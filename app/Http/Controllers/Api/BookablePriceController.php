@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Bookable;
+use App\Models\Bookable;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

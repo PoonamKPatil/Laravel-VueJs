@@ -3,7 +3,9 @@
         <h6 class="text-uppercase text-secondary font-weight-bold pt-4">Review List</h6>
         <div v-if="loading"> Loading!!!</div>
         <div v-else>
-            <div class="border-bottom d-none d-md-block" v-for="(review,index) in reviews" :key="index">
+            <!-- if want to hide review list in mobile view : check commented div element -->
+            <!-- <div class="border-bottom d-none d-md-block" v-for="(review,index) in reviews" :key="index"> -->
+            <div class="border-bottom" v-for="(review,index) in reviews" :key="index">
                 <div class="row">
                     <div class="col-md-6">Poonam </div>
                     <div class="col-md-6 d-flex justify-content-end">
