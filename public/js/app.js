@@ -2290,6 +2290,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }, _callee, null, [[3, 9]]);
       }))();
+    },
+    addToBasket: function addToBasket() {
+      console.log("add ");
+      this.$store.commit('addToBasket', {
+        bookable: this.bookable,
+        price: this.price,
+        dates: this.lastSearch
+      });
     }
   }
 });
@@ -61908,7 +61916,14 @@ var render = function() {
           _vm.price
             ? _c(
                 "button",
-                { staticClass: "btn btn-outline-secondary btn-block" },
+                {
+                  staticClass: "btn btn-outline-secondary btn-block",
+                  on: {
+                    click: function($event) {
+                      return _vm.addToBasket()
+                    }
+                  }
+                },
                 [_vm._v("Book Now")]
               )
             : _vm._e()
@@ -80254,11 +80269,22 @@ __webpack_require__.r(__webpack_exports__);
     lastSearch: {
       from: null,
       to: null
+    },
+    basket: {
+      items: []
     }
   },
   mutations: {
     setLastSearch: function setLastSearch(state, payload) {
       state.lastSearch = payload;
+    },
+    addToBasket: function addToBasket(state, payload) {
+      state.basket.items.push(payload);
+    },
+    removeFromBasket: function removeFromBasket(state, payload) {
+      state.basket.items = state.basket.items.filter(function (item) {
+        return item.bookable.id !== payload;
+      });
     }
   },
   actions: {
