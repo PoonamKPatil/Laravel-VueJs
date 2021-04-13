@@ -4,18 +4,20 @@
         <div class = "container" v-else>
             <div class="row" v-for="row in rows" :key="'row' + row">
                 <div class="col d-flex align-items-stretch" v-for="(bookable,index) in bookablesInRow(row)" :key="'row'+row+index">
-                    <!-- <bookable-list-item class="col-sm"
-                    :item-title="bookable.title"
-                    :item-content ="bookable.description"
-                    :price = "1000"
-                    >
-                    </bookable-list-item> -->
                      <bookable-list-item class="col-sm"
                     v-bind = bookable
                     >
                     </bookable-list-item>
                 </div> 
                 <div class="col" v-for="poo in placeholderInRows(row)" :key="'p' + poo"></div>
+            </div>
+            <div class="row">
+                <pagination
+                    v-if="totalPages"
+                    :totalPages="totalPages"
+                    :currentPage="currentPage"
+                    @paginationClick="getPaginatedData"
+                ></pagination>
             </div>
         </div>
         
@@ -26,9 +28,12 @@
 
 <script>
 import BookableListItem from "./BookableListItem"
+import Pagination from "../shared/components/Pagination"
+
 export default {
     components:{
-        BookableListItem
+        BookableListItem,
+        Pagination
     },
     data() {
         return {
@@ -42,7 +47,9 @@ export default {
             // }
             bookables: null,
             loading : false,
-            columns: 3
+            columns: 3,
+            totalPages: null,
+            currentPage: null
         }
     },
     created() {
@@ -102,8 +109,10 @@ export default {
 
 
 
-        const request = axios.get("/api/bookables").then(response => {
+        const request = axios.get(`/api/bookables?page=`+this.currentPage).then(response => {
             this.bookables = response.data.data
+            this.totalPages = response.data.meta.total / response.data.meta.per_page
+            this.currentPage = response.data.meta.current_page
             this.loading = false;
         }).catch(response => console.log(response));
     },
@@ -118,6 +127,14 @@ export default {
         },
         placeholderInRows(row) {
             return this.columns - this.bookablesInRow(row).length
+        },
+        getPaginatedData(page) {
+            const request = axios.get(`/api/bookables?page=`+page).then(response => {
+                this.bookables = response.data.data
+                this.totalPages = response.data.meta.total / response.data.meta.per_page
+                this.currentPage = response.data.meta.current_page
+                this.loading = false;
+            }).catch(response => console.log(response));
         }
     },
 }
