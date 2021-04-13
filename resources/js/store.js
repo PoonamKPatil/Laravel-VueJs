@@ -34,6 +34,17 @@ export default {
 
     },
     getters: {
-        itemsInBasket : (state) => state.basket.items.length
+        itemsInBasketCount : (state) => state.basket.items.length,
+        inBasketAlready(state) {
+            return function (bookableId) {
+                var bookableObj = state.basket.items.find(item => item.bookable.id === bookableId)
+                
+                if (bookableObj === undefined) {
+                    return false;
+                }
+
+                return bookableObj
+            }; 
+        }
     }
 }

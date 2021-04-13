@@ -4,7 +4,7 @@
             <router-link class = "navbar-brand" v-bind:to = "{name: 'home'}">Home</router-link>
             <router-link class = "btn nav-button" v-bind:to = "{name: 'home'}">
                 Basket
-                <span v-if="itemsInBasket" class="badge badge-secondary">{{itemsInBasket}}</span>
+                <span v-if="itemsInBasketCount" class="badge badge-secondary">{{itemsInBasketCount}}</span>
             </router-link>
             <!-- <router-link class = "btn nav-button" v-bind:to = "{name: 'second'}">Second</router-link> -->
         </nav>
@@ -40,7 +40,7 @@ export default {
             // }
         }),
         ...mapGetters({
-            itemsInBasket:'itemsInBasket'
+            itemsInBasketCount:'itemsInBasketCount'
         })
     }
 }
