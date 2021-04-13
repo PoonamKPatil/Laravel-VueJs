@@ -1,30 +1,35 @@
 <template>
-<div class="row">
-    <div class="col-md-8 pb-4">
-        <div class="card">
-            <div class="card-body">
-                <div v-if="!loading"> 
-                    <h5 class="title">{{bookable.title}}</h5>
-                    <hr>
-                    <article>{{bookable.description}}</article>
+<div>
+    <div v-if="error == 404">
+        <fatal-error></fatal-error>
+    </div>
+    <div v-else class="row">
+        <div class="col-md-8 pb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div v-if="!loading"> 
+                        <h5 class="title">{{bookable.title}}</h5>
+                        <hr>
+                        <article>{{bookable.description}}</article>
+                    </div>
+                    <div v-else>
+                        Loading.........!!!!!
+                    </div> 
                 </div>
-                <div v-else>
-                    Loading.........!!!!!
-                </div> 
             </div>
+        <reviews-list :bookable-id = this.$route.params.id></reviews-list>
         </div>
-       <reviews-list :bookable-id = this.$route.params.id></reviews-list>
-
+        <div class="col-md-4 pb-4">
+        <availability :bookable-id = $route.params.id @availability="checkPrice($event)" class="mb-4"></availability>
+            <transition name="fade">
+                <price-breakdown v-if="price" :price="price" class="mb-4"></price-breakdown>
+            </transition>
+            <transition name="fade">
+                <button class="btn btn-outline-secondary btn-block" v-if="price" @click="addToBasket()">Book Now</button>
+            </transition>
+        </div>
     </div>
-    <div class="col-md-4 pb-4">
-       <availability :bookable-id = $route.params.id @availability="checkPrice($event)" class="mb-4"></availability>
-        <transition name="fade">
-            <price-breakdown v-if="price" :price="price" class="mb-4"></price-breakdown>
-        </transition>
-        <transition name="fade">
-            <button class="btn btn-outline-secondary btn-block" v-if="price" @click="addToBasket()">Book Now</button>
-        </transition>
-    </div>
+    
 
 </div>
 </template>
@@ -41,7 +46,8 @@ export default {
         return {
             bookable : null,
             loading : false,
-            price: null
+            price: null,
+            error:false
         }
     },
     components: {
@@ -56,7 +62,7 @@ export default {
                 this.bookable = response.data.data
                 this.loading = false
             }
-        ).catch(response => console.log("ERROR"))
+        ).catch(error => this.error = error.response.status)
     },
     computed: {
         ...mapState({
