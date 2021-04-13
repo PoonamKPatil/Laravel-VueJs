@@ -59,7 +59,7 @@ export default {
             });
 
             try {
-                this.status = (await axios.get(`/api/bookable/${this.bookableId}/availability?from=${this.from}&to=${this.to}`)).status
+                this.status = (await axios.get(`/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`)).status
                 this.loading = false
                 this.$emit('availability',this.hasAvailability)
             } catch (error) {
