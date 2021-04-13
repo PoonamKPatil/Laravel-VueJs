@@ -42,7 +42,8 @@ export default {
             // }
             bookables: null,
             loading : false,
-            columns: 3
+            columns: 3,
+            error:false
         }
     },
     created() {
@@ -105,7 +106,7 @@ export default {
         const request = axios.get("/api/bookables").then(response => {
             this.bookables = response.data.data
             this.loading = false;
-        }).catch(response => console.log(response));
+        }).catch(error => this.error = error.response.status)
     },
     computed: {
         rows() {
