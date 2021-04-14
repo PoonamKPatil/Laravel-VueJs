@@ -25,16 +25,15 @@
                 <price-breakdown v-if="price" :price="price" class="mb-4"></price-breakdown>
             </transition>
             <transition name="fade">
-                <button class="btn btn-outline-secondary btn-block" v-if="price" @click="addToBasket()" :disabled="inBasketAlready">Book Now</button>
+                <button class="btn btn-outline-secondary btn-block" v-if="price" @click="addToBasket()" :disabled="inBasketAlready">Add to Basket</button>
             </transition>
             <transition name="fade">
-                <button class="btn btn-outline-secondary btn-block" v-if="price" @click="removeFromBasket()" :disabled="!inBasketAlready">Remove From Basket</button>
+                <button class="btn btn-outline-secondary btn-block" v-if="price && inBasketAlready" @click="removeFromBasket()" :disabled="!inBasketAlready">Remove From Basket</button>
             </transition>
             <div v-if="inBasketAlready" class="mt-4 text-muted warning">
-                You've already added bokable in basket
+                You've already added bokable in basket, Please remove if you need to add new item
             </div>
         </div>
-       
     </div>
     
 
@@ -94,14 +93,14 @@ export default {
             }
         },
         addToBasket() {
-            this.$store.commit('addToBasket',{
+            this.$store.dispatch('addToBasket',{
                 bookable: this.bookable,
                 price: this.price,
                 dates:this.lastSearch
             })
         },
         removeFromBasket() {
-            this.$store.commit('removeFromBasket',this.bookable.id)
+            this.$store.dispatch('removeFromBasket',this.bookable.id)
         }
     }
 }

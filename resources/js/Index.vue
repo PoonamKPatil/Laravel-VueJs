@@ -2,7 +2,7 @@
     <div>
         <nav class="navbar bg-white border-bottom navbar-light ">
             <router-link class = "navbar-brand" v-bind:to = "{name: 'home'}">Home</router-link>
-            <router-link class = "btn nav-button" v-bind:to = "{name: 'home'}">
+            <router-link class = "btn nav-button" v-bind:to = "{name: 'basket'}">
                 Basket
                 <span v-if="itemsInBasketCount" class="badge badge-secondary">{{itemsInBasketCount}}</span>
             </router-link>
