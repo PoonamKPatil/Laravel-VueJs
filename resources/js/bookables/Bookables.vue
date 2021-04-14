@@ -4,18 +4,20 @@
         <div class = "container" v-else>
             <div class="row" v-for="row in rows" :key="'row' + row">
                 <div class="col d-flex align-items-stretch" v-for="(bookable,index) in bookablesInRow(row)" :key="'row'+row+index">
-                    <!-- <bookable-list-item class="col-sm"
-                    :item-title="bookable.title"
-                    :item-content ="bookable.description"
-                    :price = "1000"
-                    >
-                    </bookable-list-item> -->
                      <bookable-list-item class="col-sm"
                     v-bind = bookable
                     >
                     </bookable-list-item>
                 </div> 
                 <div class="col" v-for="poo in placeholderInRows(row)" :key="'p' + poo"></div>
+            </div>
+            <div>
+                <pagination
+                    v-if="totalPages"
+                    :totalPages="totalPages"
+                    :currentPage="currentPage"
+                    @paginationClick="getPaginatedData"
+                ></pagination>
             </div>
         </div>
         
@@ -26,9 +28,12 @@
 
 <script>
 import BookableListItem from "./BookableListItem"
+import Pagination from "../shared/components/Pagination"
+
 export default {
     components:{
-        BookableListItem
+        BookableListItem,
+        Pagination
     },
     data() {
         return {
@@ -43,70 +48,14 @@ export default {
             bookables: null,
             loading : false,
             columns: 3,
+            totalPages: null,
+            currentPage: null,
             error:false
         }
     },
     created() {
         this.loading = true;
-
-        //Promise example
-        // const p = new Promise(function(resolve, reject) {
-        //     // console.log(resolve);
-        //     // console.log(reject);
-
-        //     setTimeout(() => {
-        //         resolve("poo")
-        //         // reject("poo")
-        //     }, 2000);
-        // })
-        // .then(result => "helloo first "+ result)
-        // .then(result => console.log(result))
-        // .catch(result => console.log(`Error ${result}`));
-
-        // console.log(p)
-
-
-        // setTimeout(() => {
-        //     this.bookables = [{
-        //         title : "New cheap villa",
-        //         content : "content for New cheap villa"
-        //     }, 
-        //     {
-        //         title : "second New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-        //     {
-        //         title : "third New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-        //     {
-        //         title : "1 New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-        //     {
-        //         title : "2 New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-        //     {
-        //         title : "3 New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-        //     {
-        //         title : "3 New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-            
-        //     ];
-            
-        //     this.loading = false;
-        // }, 4000);
-
-
-
-        const request = axios.get("/api/bookables").then(response => {
-            this.bookables = response.data.data
-            this.loading = false;
-        }).catch(error => this.error = error.response.status)
+        this.getPaginatedData(1)
     },
     computed: {
         rows() {
@@ -119,6 +68,14 @@ export default {
         },
         placeholderInRows(row) {
             return this.columns - this.bookablesInRow(row).length
+        },
+        getPaginatedData(page) {
+            const request = axios.get(`/api/bookables?page=`+page).then(response => {
+                this.bookables = response.data.data
+                this.totalPages = response.data.meta.total / response.data.meta.per_page
+                this.currentPage = response.data.meta.current_page
+                this.loading = false;
+            }).catch(response => console.log(response));
         }
     },
 }

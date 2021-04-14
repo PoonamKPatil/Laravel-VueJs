@@ -19,17 +19,7 @@ class BookableController extends Controller
     {
         // return Bookable::all();
 
-        return  BookableIndexResource::collection(Bookable::all());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return  BookableIndexResource::collection(Bookable::paginate(10));
     }
 
     /**
