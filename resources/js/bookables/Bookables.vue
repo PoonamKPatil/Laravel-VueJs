@@ -11,7 +11,7 @@
                 </div> 
                 <div class="col" v-for="poo in placeholderInRows(row)" :key="'p' + poo"></div>
             </div>
-            <div class="row">
+            <div>
                 <pagination
                     v-if="totalPages"
                     :totalPages="totalPages"
@@ -49,72 +49,13 @@ export default {
             loading : false,
             columns: 3,
             totalPages: null,
-            currentPage: null
+            currentPage: null,
+            error:false
         }
     },
     created() {
         this.loading = true;
-
-        //Promise example
-        // const p = new Promise(function(resolve, reject) {
-        //     // console.log(resolve);
-        //     // console.log(reject);
-
-        //     setTimeout(() => {
-        //         resolve("poo")
-        //         // reject("poo")
-        //     }, 2000);
-        // })
-        // .then(result => "helloo first "+ result)
-        // .then(result => console.log(result))
-        // .catch(result => console.log(`Error ${result}`));
-
-        // console.log(p)
-
-
-        // setTimeout(() => {
-        //     this.bookables = [{
-        //         title : "New cheap villa",
-        //         content : "content for New cheap villa"
-        //     }, 
-        //     {
-        //         title : "second New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-        //     {
-        //         title : "third New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-        //     {
-        //         title : "1 New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-        //     {
-        //         title : "2 New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-        //     {
-        //         title : "3 New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-        //     {
-        //         title : "3 New cheap villa",
-        //         content : "content for New cheap villa"
-        //     },
-            
-        //     ];
-            
-        //     this.loading = false;
-        // }, 4000);
-
-
-
-        const request = axios.get(`/api/bookables?page=`+this.currentPage).then(response => {
-            this.bookables = response.data.data
-            this.totalPages = response.data.meta.total / response.data.meta.per_page
-            this.currentPage = response.data.meta.current_page
-            this.loading = false;
-        }).catch(response => console.log(response));
+        this.getPaginatedData(1)
     },
     computed: {
         rows() {

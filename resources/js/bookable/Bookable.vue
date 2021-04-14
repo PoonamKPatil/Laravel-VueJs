@@ -25,9 +25,16 @@
                 <price-breakdown v-if="price" :price="price" class="mb-4"></price-breakdown>
             </transition>
             <transition name="fade">
-                <button class="btn btn-outline-secondary btn-block" v-if="price" @click="addToBasket()">Book Now</button>
+                <button class="btn btn-outline-secondary btn-block" v-if="price" @click="addToBasket()" :disabled="inBasketAlready">Book Now</button>
             </transition>
+            <transition name="fade">
+                <button class="btn btn-outline-secondary btn-block" v-if="price" @click="removeFromBasket()" :disabled="!inBasketAlready">Remove From Basket</button>
+            </transition>
+            <div v-if="inBasketAlready" class="mt-4 text-muted warning">
+                You've already added bokable in basket
+            </div>
         </div>
+       
     </div>
     
 
@@ -38,7 +45,7 @@
 import Availability from './Availability'
 import ReviewsList from './ReviewsList'
 import PriceBreakdown from './PriceBreakdown'
-import {mapState} from 'vuex'
+import {mapGetters, mapState} from 'vuex'
 
 export default {
    
@@ -66,8 +73,12 @@ export default {
     },
     computed: {
         ...mapState({
-            lastSearch:'lastSearch'
-        })
+            lastSearch:'lastSearch',
+        }),
+        inBasketAlready() {
+            if (this.bookable == null) return false;
+            return this.$store.getters.inBasketAlready(this.bookable.id)
+        }
     },
     methods:{
         async checkPrice(hasAvailability) {
@@ -83,14 +94,20 @@ export default {
             }
         },
         addToBasket() {
-            console.log("add ");
             this.$store.commit('addToBasket',{
                 bookable: this.bookable,
                 price: this.price,
                 dates:this.lastSearch
             })
+        },
+        removeFromBasket() {
+            this.$store.commit('removeFromBasket',this.bookable.id)
         }
-
     }
 }
 </script>
+<style scoped>
+    .warning {
+        font-size: 0.7rem;
+    }
+</style>

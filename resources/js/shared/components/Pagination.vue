@@ -24,6 +24,7 @@ export default {
       required:true
     }
   },
+
   methods: {
     checkActive (page) {
       return ((page) === parseInt(this.currentPage));
@@ -51,6 +52,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.pagination {
+  padding-top: 10px;
+  // align-content:center;
+}
 .page  {
 	padding: 6px 12px;
 	font-size: 14px;

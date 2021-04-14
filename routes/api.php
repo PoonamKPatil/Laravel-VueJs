@@ -45,11 +45,12 @@ use Illuminate\Support\Facades\Route;
 // Route::resource('bookables',Api\BookableController::class);
 //or
 Route::apiResource('bookables','Api\BookableController')->only('index','show');
-//use grouping
-Route::get('bookable/{bookable}/availability','Api\BookableAvailability')->name('bookables.availability.show');
-Route::get('bookables/{bookable}/reviews', 'Api\BookableReviewcontroller')->name('bookables.reviews.index');
-Route::get('bookables/{bookable}/price','Api\BookablePriceController');
 
+Route::prefix('bookables/{bookable}')->group(function () {
+    Route::get('/availability','Api\BookableAvailability')->name('bookables.availability.show');
+    Route::get('/reviews', 'Api\BookableReviewcontroller')->name('bookables.reviews.index');
+    Route::get('/price','Api\BookablePriceController');
+});
 
 Route::get('booking-by-review/{reviewKey}','Api\BookingByReviewController')->name('booking.by-review.show');
 
