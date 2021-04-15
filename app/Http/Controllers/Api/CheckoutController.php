@@ -46,5 +46,10 @@ class CheckoutController extends Controller
             }]
         ]));
 
+
+        $bookingsData = $data['bookings'];
+        $customerData = $data['customer'];
+        
+
     }
 }
