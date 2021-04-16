@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Address;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Bookable;
+use App\Models\Booking;
 
 class CheckoutController extends Controller
 {
@@ -51,5 +53,21 @@ class CheckoutController extends Controller
         $customerData = $data['customer'];
         
 
+        $bookings = collect($bookingsData)->map(function($bookingInfo) use ($customerData) {
+            $bookable = Bookable::findOrFail($bookingInfo['bookable_id']);
+            $booking = new Booking();
+            $booking->from = $bookingInfo['from'];
+            $booking->to = $bookingInfo['to'];
+            $booking->price = $bookable->priceFor($bookingInfo['from'], $bookingInfo['to'])['total'];
+            $booking->bookable()->associate($bookable);
+
+            $booking->address()->associate(Address::create($customerData));
+
+            $booking->save();
+
+            return $booking;
+        });
+
+        return $bookings;
     }
 }

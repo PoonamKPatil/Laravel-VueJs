@@ -24,17 +24,8 @@ class BookablePriceController extends Controller
         
         $bookable = Bookable::findOrFail($id);
 
-        $price = $bookable->price;
-        $days = (new Carbon($data['from']))->diffindays($data['to']) + 1;
-        $totalPrice = $price * $days;
-
         return response()->json([
-            'data' => [
-                'total' => $totalPrice,
-                'breakdown' => [
-                    $price => $days
-                ]
-            ]
+            'data' => $bookable->priceFor($data['from'], $data['to'])
         ]);
     }
 }
