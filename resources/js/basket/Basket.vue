@@ -128,13 +128,13 @@ export default {
                 }))
 
                 this.$store.dispatch('clearBasket')
+                this.bookingAttempted = true;
             } catch (error) {
                 if (is422(error)) {
                     this.errors = error.response && error.response.data.errors
                 }
             }
             this.loading = false;
-            this.bookingAttempted = true;
 
         }
     }

@@ -2185,27 +2185,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 6:
                 _this.$store.dispatch('clearBasket');
 
-                _context.next = 12;
+                _this.bookingAttempted = true;
+                _context.next = 13;
                 break;
 
-              case 9:
-                _context.prev = 9;
+              case 10:
+                _context.prev = 10;
                 _context.t0 = _context["catch"](3);
 
                 if (Object(_shared_utils_response__WEBPACK_IMPORTED_MODULE_3__["is422"])(_context.t0)) {
                   _this.errors = _context.t0.response && _context.t0.response.data.errors;
                 }
 
-              case 12:
+              case 13:
                 _this.loading = false;
-                _this.bookingAttempted = true;
 
               case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[3, 9]]);
+        }, _callee, null, [[3, 10]]);
       }))();
     }
   }
@@ -80781,6 +80781,7 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios["default"].withCredentials = true;
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
