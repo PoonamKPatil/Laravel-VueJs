@@ -11,6 +11,7 @@ import FatalError from './shared/components/FatalError';
 import ValidationErrors from './shared/components/ValidationErrors';
 import Success from './shared/components/Success';
 import StoreDefination from './store';
+import axios from "axios";
 
 window.Vue = require('vue');
 
@@ -28,13 +29,37 @@ Vue.filter('fromNow', value => {
 });
 
 const store = new Vuex.Store(StoreDefination)
+window.axios.interceptors.response.use(
+    response => {
+        response
+    },
+    error => {
+        if (error.response.status == 401) {
+            store.dispatch('logout')
+        }
+
+        return Promise.reject()
+    }
+)
 
 const app = new Vue({
     el: '#app',
     router,
     store,
     components: { Index },
-    beforeCreate() {
+    async beforeCreate() {
         this.$store.dispatch('loadLocalstorage')
+
+        // await axios.get('/sanctum/csrf-cookie')
+
+        // await axios.post('/login', {
+        //     email: '@example.net',
+        //     password: 'password'
+        // })
+
+        // await axios.get('/user')
+        
+        this.$store.dispatch('loadUser')
+
     }
 });

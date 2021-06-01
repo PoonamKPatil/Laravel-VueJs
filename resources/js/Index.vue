@@ -2,10 +2,16 @@
     <div>
         <nav class="navbar bg-white border-bottom navbar-light ">
             <router-link class = "navbar-brand" v-bind:to = "{name: 'home'}">Home</router-link>
-            <router-link class = "btn nav-button" v-bind:to = "{name: 'basket'}">
-                Basket
-                <span v-if="itemsInBasketCount" class="badge badge-secondary">{{itemsInBasketCount}}</span>
-            </router-link>
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <router-link class = "nav-link" v-bind:to = "{name: 'basket'}">
+                        Basket
+                        <span v-if="itemsInBasketCount" class="badge badge-secondary">{{itemsInBasketCount}}</span>
+                    </router-link>
+                </li>
+            </ul>
+            
             <!-- <router-link class = "btn nav-button" v-bind:to = "{name: 'second'}">Second</router-link> -->
         </nav>
        
@@ -34,6 +40,7 @@ export default {
             // lastSearchComputed : state  => state.lastSearch
             //or
             lastSearchComputed : 'lastSearch',
+            isLoggedIn: 'isLoggedIn'
             //or
             // lastSearchComputed (state) {
             //     return state.lastSearch
