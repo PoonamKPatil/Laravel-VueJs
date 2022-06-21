@@ -19,7 +19,7 @@ class BookableController extends Controller
     {
         // return Bookable::all();
 
-        return  BookableIndexResource::collection(Bookable::paginate(10));
+        return  BookableIndexResource::collection(Bookable::paginate(5));
     }
 
     /**
